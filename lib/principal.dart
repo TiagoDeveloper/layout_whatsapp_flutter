@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget{
-  
+class MyApp extends StatelessWidget {
   final String title = 'WhatsApp';
-  
+
   @override
   Widget build(BuildContext context) {
-
-
     return new MaterialApp(
       title: this.title,
       home: new HomeApp(title: this.title),
@@ -20,8 +17,7 @@ class MyApp extends StatelessWidget{
   }
 }
 
-class HomeApp extends StatefulWidget{
-
+class HomeApp extends StatefulWidget {
   final String title;
 
   HomeApp({Key key, this.title});
@@ -32,8 +28,7 @@ class HomeApp extends StatefulWidget{
   }
 }
 
-class HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin{
-
+class HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   @override
@@ -47,33 +42,33 @@ class HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin{
     return new Scaffold(
       appBar: new AppBar(
         title: Text(widget.title),
+        actions: _actions(),
         bottom: new TabBar(
           isScrollable: true,
           indicatorColor: Colors.white,
           indicatorWeight: 3.0,
-          onTap: (int index){
-
-          },
-          // labelPadding: EdgeInsets.only(left: 16, right: 15),
-          labelPadding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.043, right: MediaQuery.of(context).size.width * 0.043),
+          onTap: (int index) {},
+          labelPadding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.043,
+              right: MediaQuery.of(context).size.width * 0.043),
           controller: _tabController,
           tabs: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width * 0.05,
-              alignment: Alignment.center,
-              child: new Tab(icon: Icon(Icons.camera_alt))),
+                width: MediaQuery.of(context).size.width * 0.05,
+                alignment: Alignment.center,
+                child: new Tab(icon: Icon(Icons.camera_alt))),
             Container(
-              width: MediaQuery.of(context).size.width * 0.23,
-              alignment: Alignment.center,
-              child: new Tab(text: 'CONVERSAS')),
+                width: MediaQuery.of(context).size.width * 0.23,
+                alignment: Alignment.center,
+                child: new Tab(text: 'CONVERSAS')),
             Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              alignment: Alignment.center,
-              child: new Tab(text: 'STATUS')),
+                width: MediaQuery.of(context).size.width * 0.15,
+                alignment: Alignment.center,
+                child: new Tab(text: 'STATUS')),
             Container(
-              width: MediaQuery.of(context).size.width * 0.22,
-              alignment: Alignment.center,
-              child: new Tab(text: 'CHAMADAS')),
+                width: MediaQuery.of(context).size.width * 0.22,
+                alignment: Alignment.center,
+                child: new Tab(text: 'CHAMADAS')),
           ],
         ),
       ),
@@ -94,6 +89,30 @@ class HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin{
     _tabController.dispose();
     super.dispose();
   }
-  
-}
 
+  List<Widget> _actions() {
+    final List<String> choices = [
+      'Novo grupo',
+      'Nova transmissão',
+      'WhatsApp Web',
+      'Mensagens favoritas',
+      'Configurações'
+    ];
+    return <Widget>[
+      new IconButton(
+        icon: Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+        onPressed: null,
+      ),
+      new PopupMenuButton(itemBuilder: (BuildContext context) {
+        return choices
+            .map((choice) => new PopupMenuItem(
+                  child: new Text(choice),
+                ))
+            .toList();
+      })
+    ];
+  }
+}
