@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_layout/conversas.dart';
+import 'package:whatsapp_layout/customSearchDelegate.dart';
+import 'package:whatsapp_layout/custom_material_localization.dart';
+import 'package:whatsapp_layout/mockUser.dart';
 
 void main() => runApp(new MyApp());
 
@@ -8,6 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      localizationsDelegates:[
+        CustomMaterialLocalizationsDelegate()
+      ],
       title: this.title,
       home: new HomeApp(title: this.title),
       theme: new ThemeData(
@@ -76,7 +83,7 @@ class HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[
           new Center(child: Text('camera')),
-          new Center(child: Text('conversa')),
+          new Center(child: new Conversas(chats: new MockUser().user().chats,)),
           new Center(child: Text('status')),
           new Center(child: Text('chamadas')),
         ],
@@ -104,7 +111,12 @@ class HomeAppState extends State<HomeApp> with SingleTickerProviderStateMixin {
           Icons.search,
           color: Colors.white,
         ),
-        onPressed: null,
+        onPressed: () {
+          showSearch(
+            context: context,
+            delegate: CustomSearchDelegate(),
+          );
+        },
       ),
       new PopupMenuButton(itemBuilder: (BuildContext context) {
         return choices
